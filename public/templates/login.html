@@ -1,0 +1,66 @@
+<ion-view view-title="Login" class="grey_bg">
+  	<ion-content padding="10">
+      <div class="list">
+			<p class="form_logo">
+         	<img title="" alt="" src="img/logomain.png" class="">
+         </p>
+        	<label class="item item-input">
+          	<input type="email" placeholder="email">
+        	</label>
+        	<label class="item item-input">
+          	<input type="password" placeholder="password">
+        	</label>
+         <a ng-href="#/forgot" class="button button-clear button-block button-assertive">
+           	Forgot Password?
+         </a>
+        	<button ng-click="doLogin();" class="button button-block button-assertive">
+           	LOGIN
+         </button>
+         <button class="button button-clear button-block">
+           	Don't have an account?
+         </button>
+         <a ng-href="#/signup" class="button button-clear button-block button-assertive">
+           	Create Account
+         </a>
+      </div>
+      
+
+
+      <form ng-submit="submitLogin(loginForm)" role="form" ng-init="loginForm = {}">
+  <div class="form-group">
+    <label>email</label>
+    <input type="email" name="email" ng-model="loginForm.email" required="required" class="form-control"/>
+  </div>
+
+  <div class="form-group">
+    <label>password</label>
+    <input type="password" name="password" ng-model="loginForm.password" required="required" class="form-control"/>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-lg">Sign in</button>
+</form>
+
+
+<button class="btn btn-primary btn-lg" ng-click='signOut()'>Sign out</button>
+
+
+      <form ng-submit="submitRegistration(registrationForm)" role="form" ng-init="registrationForm = {}">
+  <div class="form-group">
+    <label>email</label>
+    <input type="email" name="email" ng-model="registrationForm.email" required="required" class="form-control"/>
+  </div>
+
+  <div class="form-group">
+    <label>password</label>
+    <input type="password" name="password" ng-model="registrationForm.password" required="required" class="form-control"/>
+  </div>
+
+  <div class="form-group">
+    <label>password confirmation</label>
+    <input type="password" name="password_confirmation" ng-model="registrationForm.password_confirmation" required="required" class="form-control"/>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-lg">Register</button>
+</form>
+  </ion-content>
+</ion-view>
