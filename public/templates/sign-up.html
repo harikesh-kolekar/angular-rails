@@ -4,27 +4,49 @@
 			<p class="form_logo">
          	<img title="" alt="" src="img/logomain.png" class="">
          </p>
+         <p ng-if = "error_message" class="header-error">
+              {{ error_message }}
+          </p>
+      <form ng-submit="handleRegBtnClick(registrationForm)" role="form" ng-init="registrationForm = {}" name = "registrationF" >
          <label class="item item-input">
-          	<input type="text" placeholder="full name">
-        	</label>
-         <label class="item item-input">
-          	<input type="text" placeholder="username">
-        	</label>
-        	<label class="item item-input">
-          	<input type="email" placeholder="email">
-        	</label>
-        	<label class="item item-input">
-          	<input type="password" placeholder="password">
-        	</label>
-        	<button ng-click="doRegister();" class="button button-block button-assertive">
-           	SIGN UP
+            <input type="text" placeholder="full name" name="name" ng-model="registrationForm.name" required="required">
+            <span class = "error" ng-show="registrationF.name.$touched && registrationF.name.$invalid">
+              <span ng-show="registrationF.name.$error.required  ">Name is required.</span>
+            </span>
+          </label>
+          <label class="item item-input">
+            <input type="email" placeholder="email" name="email" ng-model="registrationForm.email" required="required">
+            <span class = "error" ng-show="registrationF.email.$touched && registrationF.email.$invalid">
+              <span ng-show="registrationF.email.$error.required">Email is required.</span>
+              <span ng-show="registrationF.email.$error.email">Invalid email address.</span>
+            </span>
+          </label>
+          <label class="item item-input">
+            <input type="password" placeholder="password" name="password" ng-model="registrationForm.password" required="required">
+            <span class = "error" ng-show="registrationF.password.$touched && registrationF.password.$invalid">
+              <span ng-show="registrationF.password.$error.required  ">Password is required.</span>
+            </span>
+          </label>
+          <label class="item item-input">
+            <input type="password" placeholder="password_confirmation" name="password_confirmation" ng-model="registrationForm.password_confirmation" required="required">
+            <span class = "error" ng-show="registrationF.password_confirmation.$touched && registrationF.password_confirmation.$invalid">
+              <span ng-show="registrationF.password_confirmation.$error.required">Password confirmation is required.</span>
+
+            </span>
+
+            <span class = "error" ng-show="!registrationF.password_confirmation.$error.required && registrationForm.password != registrationForm.password_confirmation ">Password confirmation doesn't match Password.</span>
+
+          </label>
+          <button  class="button button-block button-assertive" ng-disabled="registrationF.$invalid || registrationForm.password != registrationForm.password_confirmation">
+            SIGN UP
          </button>
          <button class="button button-clear button-block">
-           	Already have an account?
+            Already have an account?
          </button>
          <a ng-href="#/login" class="button button-clear button-block button-assertive">
-           	Login
+            Login
          </a>
+      </form>
       </div>
       
   </ion-content>

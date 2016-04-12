@@ -1,19 +1,27 @@
 <ion-view view-title="Forgot Password" class="grey_bg">
   	<ion-content padding="10">
       <div class="list">
-			<p class="form_logo">
+			  <p class="form_logo">
          	<img title="" alt="" src="img/logomain.png" class="">
-         </p>
-        	<label class="item item-input">
-          	<input type="email" placeholder="email">
-                <span class="error">*</span>
-        	</label>
-        	<button class="button button-block button-assertive">
-           	RESET PASSWORD
+        </p>
+        <p ng-if = "error_message" class="header-error">
+              {{ error_message }}
+        </p>
+        <form ng-submit="handlePwdResetBtnClick(passwordResetForm)" role="form" ng-init="passwordResetForm = {}" name = "passwordResetF">
+          <label class="item item-input">
+            <input type="email" placeholder="email" name="email" ng-model="passwordResetForm.email" required="required">
+            <span class = "error" ng-show="passwordResetF.email.$touched && passwordResetF.email.$invalid">
+              <span ng-show="passwordResetF.email.$error.required">Email is required.</span>
+              <span ng-show="passwordResetF.email.$error.email">Invalid email address.</span>
+            </span>
+          </label>
+          <button class="button button-block button-assertive" ng-disabled="passwordResetF.$invalid">
+            RESET PASSWORD
          </button>
          <a ng-href="#/login" class="button button-clear button-block button-assertive">
-           	Back to Login
+            Back to Login
          </a>
+        </form>
       </div>
   </ion-content>
 </ion-view>

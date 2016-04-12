@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 var app = angular.module('YourApp', ['ionic','ngSanitize', 'ngCordova','ngIOS9UIWebViewPatch','mobsocial.products', 'ng-token-auth']);
 // not necessary for a web based app // needed for cordova/ phonegap application
-app.run(function($ionicPlatform) {
+app.run(function($ionicPlatform, $rootScope, $location, $auth, $state) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -18,6 +18,15 @@ app.run(function($ionicPlatform) {
       StatusBar.styleDefault();
     }
   });
+  $rootScope.$watch(function() { 
+      return $location.path(); 
+    },
+    function(a){  
+    	console.log($auth.validateUser());
+     if($auth.validateUser().$$state.status == 1){ if(a == '/login' || a == '/signup' || a == '/forgot'  ) $state.go('app.features'); }
+     else if(a == '/login' || a == '/signup' || a == '/forgot') ;
+     else $state.go('login');
+    });
 });
 //app run getting device id
 app.run(function ($rootScope, myPushNotification) {
@@ -74,8 +83,21 @@ app.controller('IntroCtrl', ['$scope', '$state', '$ionicSlideBoxDelegate', funct
   }
 }])
 /* main controller function */
-app.controller('MainCtrl', ['$scope', '$ionicSideMenuDelegate', '$ionicHistory', function($scope, $ionicSideMenuDelegate, $ionicHistory) {
+app.controller('MainCtrl', ['$scope', '$ionicSideMenuDelegate', '$ionicHistory', '$auth', '$state', function($scope, $ionicSideMenuDelegate, $ionicHistory, $auth, $state) {
   	// Toggle left function for app sidebar
+  	
+  	 $scope.handleSignOutBtnClick = function() {
+      $auth.signOut()
+        .then(function(resp) {
+          $state.go('login');
+          console.log(resp)
+        })
+        .catch(function(resp) {
+        	console.log(resp)
+          // handle error response
+        });
+    };
+
   	$scope.toggleLeft = function() {
     	$ionicSideMenuDelegate.toggleLeft();
   	};
@@ -97,23 +119,52 @@ app.controller('MainCtrl', ['$scope', '$ionicSideMenuDelegate', '$ionicHistory',
 	}
 }])
 // login page of app //
-app.controller('LoginCtrl', ['$state','$scope', function($state, $scope) {	
+app.controller('LoginCtrl', ['$state','$scope', '$auth', function($state, $scope, $auth) {	
     console.log("Login ctrl");
 	// add your login logic here
-	$scope.doLogin = function(){
-		$state.go('app.features');
-	}
+	$scope.handleLoginBtnClick = function(loginForm) {
+	$scope.error_message = "";
+	$auth.submitLogin(loginForm)
+        .then(function(resp) {
+        	loginForm.email = ""
+        	loginForm.password = ""
+        	$state.go('app.features');
+        })
+        .catch(function(resp) {
+          $scope.error_message = resp.data.errors.join(', ')
+        });
+    };
 }])
 // Sign up page of app //
-app.controller('SignUpCtrl', ['$state','$scope', function($state, $scope) {	
+app.controller('SignUpCtrl', ['$state','$scope','$auth', function($state, $scope, $auth) {	
 	// sign up logic here
-	$scope.doRegister = function(){
-		$state.go('app.features');
-	}
+	$scope.handleRegBtnClick = function(registrationForm) {
+      $auth.submitRegistration(registrationForm)
+        .then(function(resp) {
+        	registrationForm.email = ""
+        	registrationForm.password = ""
+            $state.go('login');
+        })
+        .catch(function(resp) {
+          $scope.error_message = resp.data.errors.full_messages.join(', ')
+        });
+    };
 }])
 // Forgot password page of app //
-app.controller('ForgotCtrl', ['$scope', function($scope) {	
+app.controller('ForgotCtrl', ['$scope','$auth', function($scope, $auth) {	
 	// forgot password
+	$scope.handlePwdResetBtnClick = function(passwordResetForm) {
+      $auth.requestPasswordReset(passwordResetForm)
+        .then(function(resp) {
+          // handle success response
+          console.log(resp);
+          $scope.error_message = resp.data.message
+        })
+        .catch(function(resp) {
+          // handle error response
+          $scope.error_message = resp.data.errors.join(', ')
+        });
+    };
 }])
 // Forgot password page of app //
 app.controller('GalleryCtrl', ['$scope', 'Photos', '$ionicModal', function($scope, Photos, $ionicModal) {

@@ -25,7 +25,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
     .state('app', {
       url: "/app",
       abstract: true,
-      templateUrl: "templates/sidebar-menu.html"
+      templateUrl: "templates/sidebar-menu.html",
+      resolve: {
+          auth: function($auth) {
+            return $auth.validateUser();
+          }
+        }
     })
 	
 	 
