@@ -7,6 +7,7 @@ app.constant("Config", {
   "MessageUrl": "data/message.json",
   "ProductUrl": "data/products.json",
   "WordPress": "http://data.dearpins.com/wp/",
+  "ResendAuthenticationEmailUrl": "api/device/resend_authentication_email",
 })
 // config contact
 app.constant("ConfigContact", {

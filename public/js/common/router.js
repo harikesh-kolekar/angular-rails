@@ -8,8 +8,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
       controller: "LoginCtrl"
      
     })	
+    // Resend authentication email page
+	 .state('resend_authentication_email', {
+      url: "/resend_authentication_email",
+      templateUrl: "templates/resend_authentication_email.html",
+      controller: "ResendAuthenticationEmailCtrl"
+    })
+
     // Sign up page
-	 .state('signup', {
+   .state('signup', {
       url: "/signup",
       templateUrl: "templates/sign-up.html",
       controller: "SignUpCtrl"

@@ -1,0 +1,27 @@
+<ion-view view-title="Resend Authentication Email" class="grey_bg">
+  	<ion-content padding="10">
+      <div class="list">
+			  <p class="form_logo">
+         	<img title="" alt="" src="img/logomain.png" class="">
+        </p>
+        <p ng-if = "error_message" class="header-error">
+              {{ error_message }}
+        </p>
+        <form ng-submit="handleResendAuthenticationEmailBtnClick(ResendAuthenticationEmailForm.email)" role="form" ng-init="ResendAuthenticationEmailForm = {}" name = "ResendAuthenticationEmailF">
+          <label class="item item-input">
+            <input type="email" placeholder="email" name="email" ng-model="ResendAuthenticationEmailForm.email" required="required">
+            <span class = "error" ng-show="ResendAuthenticationEmailF.email.$touched && ResendAuthenticationEmailF.email.$invalid">
+              <span ng-show="ResendAuthenticationEmailF.email.$error.required">Email is required.</span>
+              <span ng-show="ResendAuthenticationEmailF.email.$error.email">Invalid email address.</span>
+            </span>
+          </label>
+          <button class="button button-block button-assertive" ng-disabled="ResendAuthenticationEmailF.$invalid">
+            Resend Authentication Email
+         </button>
+         <a ng-href="#/login" class="button button-clear button-block button-assertive">
+            Back to Login
+         </a>
+        </form>
+      </div>
+  </ion-content>
+</ion-view>

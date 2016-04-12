@@ -23,8 +23,8 @@ app.run(function($ionicPlatform, $rootScope, $location, $auth, $state) {
     },
     function(a){  
     	console.log($auth.validateUser());
-     if($auth.validateUser().$$state.status == 1){ if(a == '/login' || a == '/signup' || a == '/forgot'  ) $state.go('app.features'); }
-     else if(a == '/login' || a == '/signup' || a == '/forgot') ;
+     if($auth.validateUser().$$state.status == 1){ if(a == '/login' || a == '/signup' || a == '/forgot'|| a == '/resend_authentication_email'  ) $state.go('app.features'); }
+     else if(a == '/login' || a == '/signup' || a == '/forgot' || a == '/resend_authentication_email' ) ;
      else $state.go('login');
     });
 });
@@ -166,7 +166,20 @@ app.controller('ForgotCtrl', ['$scope','$auth', function($scope, $auth) {
         });
     };
 }])
-// Forgot password page of app //
+// Resend authentication email page of app //
+app.controller('ResendAuthenticationEmailCtrl', ['$scope', 'ResendAuthenticationEmail', function($scope, ResendAuthenticationEmail) {	
+	$scope.handleResendAuthenticationEmailBtnClick = function(email) {
+      ResendAuthenticationEmail.requestResendAuthenticationEmail(email)
+        .success(function (resp) {
+			$scope.error_message = resp.message
+		})
+		.error(function (resp) {
+			$scope.error_message = resp.errors.join(', ')
+		});
+    };
+}])
+
+// Gallery page of app //
 app.controller('GalleryCtrl', ['$scope', 'Photos', '$ionicModal', function($scope, Photos, $ionicModal) {
 	
 	$scope.items = [];

@@ -1,4 +1,19 @@
 
+// friends factory
+app.factory('ResendAuthenticationEmail',['$http', 'Config', function($http, Config) {
+    var data = {};
+    data.requestResendAuthenticationEmail = function (email) {
+        return $http(
+            {
+                method: 'POST', url:Config.ResendAuthenticationEmailUrl,
+                data: {
+                    email: email,
+                }
+            }
+        );
+    }
+    return data;
+}]);
 app.factory('SocialData', function(){
     var data = {};
     
