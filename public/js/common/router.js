@@ -40,7 +40,16 @@ app.config(function($stateProvider, $urlRouterProvider) {
         }
     })
 	
-	 
+	 // Change password page
+   .state('app.changepassword', {
+      url: "/changepassword",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/change-password.html",
+          controller: "ChangePasswordCtrl"
+        }
+      }
+    })
 	
 	 // Gallery page
 	 .state('app.gallery', {
@@ -48,8 +57,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		cache : false, 
       views: {
         'menuContent' :{
-          	templateUrl: "templates/gallery.html",
-		  		controller: "GalleryCtrl"
+           templateUrl: "templates/gallery.html",
+          controller: "GalleryCtrl"
         }
       }
     })

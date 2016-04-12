@@ -118,6 +118,27 @@ app.controller('MainCtrl', ['$scope', '$ionicSideMenuDelegate', '$ionicHistory',
 		window.open(url, '_system');
 	}
 }])
+
+// Change password page of app //
+app.controller('ChangePasswordCtrl', ['$state','$scope', '$auth', function($state, $scope, $auth) {	
+	// add your login logic here
+	$scope.handleChangePasswordBtnClick = function(changePasswordForm) {
+	$scope.error_message = "";
+	$auth.updatePassword(changePasswordForm)
+        .then(function(resp) {
+        	console.log(resp)
+        	changePasswordForm.password = ""
+        	changePasswordForm.password_confirmation = ""
+        	$scope.error_message = "Password has been changed successfully."
+        })
+        .catch(function(resp) {
+        	console.log(resp)
+          $scope.error_message = resp.data.errors.full_messages.join(', ')
+        });
+    };
+}])  
+
+
 // login page of app //
 app.controller('LoginCtrl', ['$state','$scope', '$auth', function($state, $scope, $auth) {	
     console.log("Login ctrl");

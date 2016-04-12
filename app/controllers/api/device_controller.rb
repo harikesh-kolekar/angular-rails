@@ -7,7 +7,7 @@ class Api::DeviceController < ApplicationController
       }, status: 400
     end
     errors = nil
-	@resource = User.find_by(email: params[:email])
+	  @resource = User.find_by(email: params[:email])
     if @resource
       @resource.send_confirmation_instructions
     else
