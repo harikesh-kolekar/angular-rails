@@ -29,6 +29,7 @@ gem 'omniauth'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
+gem 'rack-cors', :require => 'rack/cors'
 group :production do
 	gem 'pg'
 end
